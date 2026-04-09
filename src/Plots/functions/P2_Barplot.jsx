@@ -13,7 +13,7 @@ const GRIDLINE_COLOR = "#808080";
 const AXIS_LABEL_COLOR = "#5f5f5f";
 
 
-function Barplot_TEcon({ data }) {
+function P2_Barplot({ data }) {
   const sorted = [...data].sort((a, b) => b.count - a.count);
 
   const yScale = scaleBand()
@@ -101,4 +101,4 @@ function Barplot_TEcon({ data }) {
     </svg>
   );
 }
-export default Barplot_TEcon;
+export default P2_Barplot;

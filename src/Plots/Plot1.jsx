@@ -1,40 +1,70 @@
-import Barplot_TEcon from './functions/Barplot_TEcon';
-
+import P1_Barplot from './functions/P1_Barplot';
 
 const data = [
-  { count: 6,  name: "Hantavirus" },
-  { count: 7,  name: "Tularemia" },
-  { count: 7,  name: "Dengue" },
-  { count: 9,  name: "Ebola" },
-  { count: 11, name: "E. coli" },
-  { count: 15, name: "Tuberculosis" },
-  { count: 17, name: "Salmonella" },
-  { count: 18, name: "Vaccinia" },
-  { count: 54, name: "Brucella" },
+  { country: "United States", students: 68 },
+  { country: "France", students: 21 },
+  { country: "United Kingdom", students: 21 },
+  { country: "Germany", students: 20 },
+  { country: "Switzerland", students: 13 },
+  { country: "Spain", students: 10 },
+  { country: "Netherlands", students: 9 },
+  { country: "India", students: 9 },
+  { country: "Singapore", students: 8 },
+  { country: "Ireland", students: 8 },
+  { country: "Sweden", students: 7 },
+  { country: "Australia", students: 7 },
+  { country: "Canada", students: 6 },
+  { country: "Finland", students: 5 },
+  { country: "Mexico", students: 4 },
+  { country: "Brazil", students: 4 },
+  { country: "Saudi Arabia", students: 3 },
+  { country: "Romania", students: 3 },
+  { country: "Philippines", students: 3 },
+  { country: "New Zealand", students: 3 },
 ];
 
+const countryFlags = [
+  { country: "United States",  flag: "🇺🇸" },
+  { country: "France",         flag: "🇫🇷" },
+  { country: "United Kingdom", flag: "🇬🇧" },
+  { country: "Germany",        flag: "🇩🇪" },
+  { country: "Switzerland",    flag: "🇨🇭" },
+  { country: "Spain",          flag: "🇪🇸" },
+  { country: "Netherlands",    flag: "🇳🇱" },
+  { country: "India",          flag: "🇮🇳" },
+  { country: "Singapore",      flag: "🇸🇬" },
+  { country: "Ireland",        flag: "🇮🇪" },
+  { country: "Sweden",         flag: "🇸🇪" },
+  { country: "Australia",      flag: "🇦🇺" },
+  { country: "Canada",         flag: "🇨🇦" },
+  { country: "Finland",        flag: "🇫🇮" },
+  { country: "Mexico",         flag: "🇲🇽" },
+  { country: "Brazil",         flag: "🇧🇷" },
+  { country: "Saudi Arabia",   flag: "🇸🇦" },
+  { country: "Romania",        flag: "🇷🇴" },
+  { country: "Philippines",    flag: "🇵🇭" },
+  { country: "New Zealand",    flag: "🇳🇿" },
+];
 
-{/*Define colour scheme*/}
-const FOOTNOTE_COLOR = "#5f5f5f";
+// Build a lookup map for O(1) access
+const flagMap = Object.fromEntries(countryFlags.map(d => [d.country, d.flag]));
+
+// Merge: add flag into each data entry
+const dataWithFlags = data.map(d => ({ ...d, flag: flagMap[d.country] ?? d.country }));
+
 
 function Plot1() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-      {/* Align all text to the left perfectly to the plot */}
-      <div style={{ width: '650px' }}>
-        <svg width="650" height="10" style={{ display: 'block', paddingLeft: '20px', marginBottom: '0px' }}>
-          <rect x={0} y={0} width={30} height={10} fill="#e3120b" />
-          <line x1={0} x2={650} y1={0} y2={0} stroke="#e3120b" strokeWidth={1.5} />
-        </svg>
-        <div style={{ paddingLeft: '20px', paddingBottom: '10px', fontWeight: 'bold', fontSize: '20px',color: 'black', textAlign: 'left' }}>Escape artists</div>
-        <div style={{ paddingLeft: '20px', paddingBottom: '15px', fontSize: '16px', color: 'black', textAlign: 'left' }}>Number of laboratory-acquired infections, 1970-2021</div>
-        <Barplot_TEcon data={data} />
-        <div style={{ paddingLeft: '20px', paddingTop: '0px', fontSize: '11px', color: FOOTNOTE_COLOR, textAlign: 'left' }}>Sources: Laboratory-Acquired Infection Database; American Biological Safety Association</div>
-        <div style={{ paddingLeft: '20px', paddingTop: '0px', fontSize: '11px', color: FOOTNOTE_COLOR, textAlign: 'left' }}>The Economist</div>
-
-      </div>
+      <div style={{ marginLeft: '0px' }}>
+         <h1 style={{ marginLeft: '0px',  textAlign: 'center' }}>We the Data Viz Aficionados </h1>
+         <h3 style={{ marginLeft: '0px', textAlign: 'center' }}>Where are we based? </h3>
+         <div style={{ '--plot-bar-radius': '5px' }}>
+           <P1_Barplot data={dataWithFlags}  />
+         </div>
+      </div> 
     </div>
-  );
+  )
 }
 
 export default Plot1;

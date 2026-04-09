@@ -1,19 +1,22 @@
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import './App.css';
-import Plot1 from './Plots/Plot1';
-import Plot2 from './Plots/Plot2';
-import Plot3 from './Plots/Plot3';
-import Plot4 from './Plots/Plot4';
-import Plot0 from './Plots/Plot0';
 
-const plots = [
-  { label: 'Plot 0', path: '/plot0' },
-  { label: 'Plot 1', path: '/plot1' },
-  { label: 'Plot 2', path: '/plot2' },
-  { label: 'Plot 3', path: '/plot3' },
-  { label: 'Plot 4', path: '/plot4' },
-];
+// Auto-discover all Plot*.jsx files in ./Plots — no manual imports needed
+const plotModules = import.meta.glob('./Plots/Plot*.jsx', { eager: true });
+
+const plots = Object.entries(plotModules)
+  .map(([filePath, mod]) => {
+    const name = filePath.replace('./Plots/', '').replace('.jsx', ''); // e.g. "Plot1"
+    const number = name.replace('Plot', '');                           // e.g. "1"
+    return {
+      name,
+      label: `Plot ${number}`,
+      path: `/plot${number}`,
+      Component: mod.default,
+    };
+  })
+  .sort((a, b) => a.path.localeCompare(b.path));
 
 function Header() {
   const navigate = useNavigate();
@@ -74,23 +77,24 @@ function App() {
         <div className="main-content">
           <Routes>
             <Route path="/" element={
-              <div>
-                <h1>Welcome to the D3 Viz</h1>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px' }}>
+                {/* Put a D3.svg image here */}
+                <img src="/D3.svg" alt="D3.js Logo" style={{ width: '100px', height: '100px' }} />
+                <h1 style={{fontSize: "25px"}}>Working With D3 - Data Viz Gallery</h1>
                 <ul className="home-nav-list">
-                  <li><Link to="/plot1">Plot 1</Link></li>
-                  <li><Link to="/plot2">Plot 2</Link></li>
-                  <li><Link to="/plot3">Plot 3</Link></li>
-                  <li><Link to="/plot4">Plot 4</Link></li>
-                  <li><Link to="/plot0">Plot 0</Link></li>
+                  {plots.map(p => (
+                    <li key={p.path}><Link to={p.path}>{p.label}</Link></li>
+                  ))}
                 </ul>
               </div>
             } />
-            {/* Define routes for the plots */}
-            <Route path="/plot1" element={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}><Plot1 /></div>} />
-            <Route path="/plot2" element={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}><Plot2 /></div>} />
-            <Route path="/plot3" element={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}><Plot3 /></div>} />
-            <Route path="/plot4" element={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}><Plot4 /></div>} />
-            <Route path="/plot0" element={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}><Plot0 /></div>} />
+            {plots.map(({ path, Component }) => (
+              <Route key={path} path={path} element={
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+                  <Component />
+                </div>
+              } />
+            ))}
           </Routes>
         </div>
         <footer className="site-footer">

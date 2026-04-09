@@ -7,7 +7,7 @@ const SVG_HEIGHT = 400;
 const innerWidth  = SVG_WIDTH  - MARGIN.left - MARGIN.right;
 const innerHeight = SVG_HEIGHT - MARGIN.top  - MARGIN.bottom;
 
-function Barplot({ data }) {
+function P1_Barplot({ data }) {
   const yScale = scaleBand()
     .domain(data.map(d => d.country))
     .range([0, innerHeight])
@@ -78,4 +78,4 @@ function Barplot({ data }) {
   );
 }
 
-export default Barplot;
+export default P1_Barplot;
