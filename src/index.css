@@ -1,0 +1,92 @@
+:root {
+  /* === Layout === */
+  --page-gutter: 20px 30px;
+
+  /* === Brand Colours === */
+  --color-deep-teal:   #1f4f48;
+  --color-sage-green:  #8EBBA7;
+  --color-mist-blue:   #B9CDCB;
+  --color-linen:       #F2DDCC;
+  --color-peach:       #FCAC89;
+  --color-terracotta:  #f4702e;
+
+  /* === Semantic Colour Roles === */
+  --color-primary:     var(--color-deep-teal);
+  --color-secondary:   var(--color-deep-teal);
+  --color-bg:          var(--color-mist-blue);
+  --color-text:        var(--color-deep-teal);
+  --color-text-muted:  var(--color-sage-green);
+  --color-green-sheen: #549182;
+
+  /* === Plot / Chart Defaults === */
+  --plot-bar-color:        var(--color-linen);
+  --plot-bar-radius:       3px;
+  --plot-gridline-color:   var(--color-sage-green);
+  --plot-axis-color:       var(--color-deep-teal);
+  --plot-axis-label-color: var(--color-deep-teal);  /* X and Y axis labels */
+  --plot-label-color:      var(--color-deep-teal);   /* value labels at bar ends */
+  --plot-label-size:       12px;
+  --plot-tick-size:        11px;
+  --plot-tick-color:       var(--color-text-muted);
+
+  /* === Fonts === */
+  --font-family-base:  'Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  /* === Font Sizes === */
+  --font-size-xs:      11px;
+  --font-size-sm:      13px;
+  --font-size-base:    16px;
+  --font-size-lg:      20px;
+  --font-size-xl:      28px;
+  --font-size-h1:      2em;
+
+  /* === Base === */
+  font-family:            var(--font-family-base);
+  color:                  var(--color-text);
+  background-color:       var(--color-bg);
+  line-height:            1.5;
+  font-weight:            400;
+  font-synthesis:         none;
+  text-rendering:         optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  box-sizing: border-box;
+}
+
+h1 { font-size: var(--font-size-h1); color: var(--color-primary); }
+h2 { font-size: var(--font-size-xl);  color: var(--color-primary); }
+p  { font-size: var(--font-size-base); }
+
+a {
+  font-weight: 500;
+  color: var(--color-secondary);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--color-terracotta);
+  opacity: 0.8;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--color-primary);
+  color: var(--color-linen);
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+button:hover {
+  background-color: var(--color-peach);
+}
