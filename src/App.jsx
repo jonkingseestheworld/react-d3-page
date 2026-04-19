@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import './App.css';
+import { plotLabels } from './Plots/plots.config';
 
 // Auto-discover all Plot*.jsx files in ./Plots — no manual imports needed
 const plotModules = import.meta.glob('./Plots/Plot*.jsx', { eager: true });
@@ -11,7 +12,7 @@ const plots = Object.entries(plotModules)
     const number = name.replace('Plot', '');                           // e.g. "1"
     return {
       name,
-      label: `Plot ${number}`,
+      label: plotLabels[name] ?? `P${number}`,
       path: `/plot${number}`,
       Component: mod.default,
     };
@@ -79,8 +80,14 @@ function App() {
             <Route path="/" element={
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px' }}>
                 {/* Put a D3.svg image here */}
-                <img src="/D3.svg" alt="D3.js Logo" style={{ width: '100px', height: '100px' }} />
-                <h1 style={{fontSize: "25px"}}>Working With D3 - Data Viz Gallery</h1>
+                {/* <img src="/D3.svg" alt="D3.js Logo" style={{ width: '100px', height: '100px' }} />. */}
+                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                  {/* Replace D3 text below with the D3.js Logo image */}
+                  <h1 style={{fontSize: "35px", marginTop: "5px", marginBottom: "5px"}}>Working With <img src="/D3.svg" alt="D3" style={{height: "35px", width: "35px", verticalAlign: "middle", marginLeft: "8px"}} /></h1>
+                  <h2 style={{fontSize: "25px", marginTop: "5px", marginBottom: "5px"}}>Data Viz Gallery</h2>
+                  <hr style={{border: 'none', borderTop: '1px solid #333', margin: '23px 0', width: '100%'}} />
+                </div>
+
                 <ul className="home-nav-list">
                   {plots.map(p => (
                     <li key={p.path}><Link to={p.path}>{p.label}</Link></li>
