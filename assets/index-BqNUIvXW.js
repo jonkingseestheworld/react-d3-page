@@ -17,7 +17,7 @@ Error generating stack: `+a.message+`
         }
         @media (max-width: 768px) {
           .plot3-container {
-            width: 100%;
+            max-width: 650px;
             overflow-x: hidden;
           }
         }
