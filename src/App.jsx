@@ -19,6 +19,19 @@ const plots = Object.entries(plotModules)
   })
   .sort((a, b) => a.path.localeCompare(b.path));
 
+function RedirectHandler() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const redirect = params.get('redirect');
+    if (redirect && redirect !== '/') {
+      const path = redirect.startsWith('/') ? redirect : '/' + redirect;
+      navigate(path, { replace: true });
+    }
+  }, [navigate]);
+  return null;
+}
+
 function Header() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -71,6 +84,7 @@ function Header() {
 function App() {
   return (
     <Router>
+      <RedirectHandler />
       <div className="sticky-top">
         <Header />
       </div>

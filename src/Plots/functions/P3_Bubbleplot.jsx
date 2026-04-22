@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { scaleLinear, scaleSqrt, max } from 'd3';
 import { AxisBottom } from './AxisBottom';
 import { AxisLeft } from './AxisLeft';
+import { useDimensions } from "./use-dimensions";
 
-const MARGIN = { top: 30, right: 30, bottom: 50, left: 60 };
-const SVG_WIDTH  = 650;
-const SVG_HEIGHT = 450;
 
-const innerWidth  = SVG_WIDTH  - MARGIN.left - MARGIN.right;
-const innerHeight = SVG_HEIGHT - MARGIN.top  - MARGIN.bottom;
+const MARGIN = { top: 30, right: 30, bottom: 50, left: 50 };
+
 
 const AXIS_COLOR = "#5f5f5f";
 
@@ -22,7 +20,15 @@ const CONTINENT_COLORS = {
 
 
 
-function P3_Bubbleplot({ data, pixelsPerTickX=80, pixelsPerTickY=50 }) {
+export const P3_Bubbleplot = ({ data, pixelsPerTickX=80, pixelsPerTickY=50, SVG_WIDTH, SVG_HEIGHT}) => {
+  
+  if (SVG_WIDTH === 0 || SVG_HEIGHT === 0) {
+    return null;
+  }
+
+  const innerWidth  = SVG_WIDTH  - MARGIN.left - MARGIN.right;
+  const innerHeight = SVG_HEIGHT - MARGIN.top  - MARGIN.bottom;
+
   const [activeContinent, setActiveContinent] = useState(null);
   const [tooltip, setTooltip] = useState(null); // { d, x, y }
 
@@ -203,7 +209,16 @@ function P3_Bubbleplot({ data, pixelsPerTickX=80, pixelsPerTickY=50 }) {
 
       </g>
     </svg>
-  );
-}
+  )
+} ;
 
-export default P3_Bubbleplot;
+export const P3_ResponsiveBubbleplot = ({ height = 450, ...props }) => {
+  const chartRef = useRef(null);
+  const chartSize = useDimensions(chartRef);
+
+  return (
+    <div ref={chartRef} style={{ width: "100%", height }}>
+      <P3_Bubbleplot SVG_WIDTH={chartSize.width} SVG_HEIGHT={chartSize.height} {...props} />
+    </div>
+  );
+};

@@ -78,4 +78,5 @@ function P1_Barplot({ data }) {
   );
 }
 
+
 export default P1_Barplot;

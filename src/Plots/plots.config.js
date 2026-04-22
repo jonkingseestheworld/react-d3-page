@@ -7,7 +7,7 @@ export const plotLabels = {
   Plot1: 'D3 course learner summary',
   Plot2: 'Economist Virus Barplot',
   Plot3: 'Gapminder Health x Wealth',
-  Plot5: '[Placeholder]',
-  Plot6: '[Placeholder]',
+  Plot5: '[Placeholder!]',
+  Plot6: '[Placeholder!]',
 
 };
