@@ -2,7 +2,7 @@ const GRIDLINE_COLOR   = "#808080";
 const AXIS_COLOR       = "#5f5f5f";
 const AXIS_LABEL_COLOR = "#333333";
 
-export const AxisLeft = ({ yScale, pixelsPerTick, innerWidth, label }) => {
+export const AxisLeft = ({ yScale, pixelsPerTick, innerWidth, label, formatTick = d => d, showGridlines = true }) => {
   const range = yScale.range();
   const height = range[0] - range[1];
   const ticks = yScale.ticks(Math.floor(height / pixelsPerTick));
@@ -12,12 +12,14 @@ export const AxisLeft = ({ yScale, pixelsPerTick, innerWidth, label }) => {
       {ticks.map((tick) => (
         <g>
           {/* Y gridlines */}
+          {showGridlines && (
           <line
             key={tick}
             x1={0} x2={innerWidth}
             y1={yScale(tick)} y2={yScale(tick)}
-            stroke={GRIDLINE_COLOR} strokeWidth={0.5} opacity={0.4}
+            stroke={GRIDLINE_COLOR} strokeWidth={0.6} opacity={0.5} strokeDasharray="6, 3"
           />
+          )}
           {/* Y tick labels */}
           <text
             key={tick}
@@ -28,7 +30,7 @@ export const AxisLeft = ({ yScale, pixelsPerTick, innerWidth, label }) => {
             fontSize={11}
             fill={AXIS_COLOR}
           >
-            {tick}
+            {formatTick(tick)}
           </text>
         </g>
       ))}
@@ -55,3 +57,4 @@ export const AxisLeft = ({ yScale, pixelsPerTick, innerWidth, label }) => {
     </>
   );
 };
+

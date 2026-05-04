@@ -19,18 +19,99 @@
   padding-top: 60px;
 }
 
-.home-nav-list {
-  list-style: none;
-  padding: 0;
+/* Project card grid */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 1000px;
   margin: 0 auto;
-  display: inline-flex;
-  flex-direction: column;
-  gap: 12px;
+  padding: 0 0 40px;
   text-align: left;
 }
 
-.home-nav-list li a {
-  font-size: var(--font-size-lg);
+.project-card {
+  background: var(--color-linen);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+.project-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.14);
+}
+
+.project-image-wrapper {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.project-image-wrapper:hover .project-image {
+  transform: scale(1.03);
+}
+.project-image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-mist-blue);
+}
+
+.project-content {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.project-name {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-deep-teal);
+  margin: 0;
+}
+
+.project-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-deep-teal);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.tag {
+  font-size: var(--font-size-xs);
+  border: 1px solid var(--color-deep-teal);
+  color: var(--color-deep-teal);
+  border-radius: 20px;
+  padding: 2px 10px;
+}
+
+.project-link {
+  margin-top: auto;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-terracotta);
+  text-decoration: none;
+}
+.project-link:hover {
+  opacity: 0.75;
+  color: var(--color-terracotta);
 }
 
 .site-header {

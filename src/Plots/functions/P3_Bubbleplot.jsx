@@ -1,11 +1,11 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { scaleLinear, scaleSqrt, max } from 'd3';
 import { AxisBottom } from './AxisBottom';
 import { AxisLeft } from './AxisLeft';
 import { useDimensions } from "./use-dimensions";
 
 
-const MARGIN = { top: 30, right: 30, bottom: 50, left: 50 };
+const MARGIN = { top: 30, right: 30, bottom: 50, left: 60 };
 
 
 const AXIS_COLOR = "#5f5f5f";
@@ -18,6 +18,10 @@ const CONTINENT_COLORS = {
   Oceania:  "#b07aa1",
 };
 
+export const AxisBottomWithKFormat = ({ xScale, pixelsPerTick, innerHeight, label }) => {
+  const formatTick = (tick) => tick >= 1000 ? `${(tick / 1000).toFixed(0)}k` : `${tick}`;
+  return <AxisBottom xScale={xScale} pixelsPerTick={pixelsPerTick} innerHeight={innerHeight} label={label} formatTick={formatTick} />;
+};
 
 
 export const P3_Bubbleplot = ({ data, pixelsPerTickX=80, pixelsPerTickY=50, SVG_WIDTH, SVG_HEIGHT}) => {
@@ -46,11 +50,28 @@ export const P3_Bubbleplot = ({ data, pixelsPerTickX=80, pixelsPerTickY=50, SVG_
     .domain([0, max(data, d => d.pop)])
     .range([2, 40]);
 
+  const sizeLevels = [
+    { pop: 1_000_000,     label: '1M'   },
+    { pop: 10_000_000,     label: '10M'  },
+    { pop: 100_000_000,    label: '100M' },
+    { pop: 1_000_000_000,  label: '1B'   },
+  ];
+
+  const bubbleLegendPositions = useMemo(() => {
+    let curX = 0;
+    return sizeLevels.map(({ pop, label }) => {
+      const r = rScale(pop);
+      const cx = curX + r;
+      curX = cx + r + 10;
+      return { r, cx, label };
+    });
+  }, [rScale]);
+
   return (
     <svg width={SVG_WIDTH} height={SVG_HEIGHT}>
       <g transform={`translate(${MARGIN.left}, ${MARGIN.top})`}>
 
-        <AxisBottom xScale={xScale} pixelsPerTick={pixelsPerTickX} innerHeight={innerHeight} label="GDP per capita (USD)" />
+        <AxisBottomWithKFormat xScale={xScale} pixelsPerTick={pixelsPerTickX} innerHeight={innerHeight} label="GDP per capita (USD)" />
         <AxisLeft   yScale={yScale} pixelsPerTick={pixelsPerTickY} innerWidth={innerWidth}   label="Life Expectancy (years)" />
 
         {/* Bubbles — render smaller pops on top */}
@@ -107,32 +128,17 @@ export const P3_Bubbleplot = ({ data, pixelsPerTickX=80, pixelsPerTickY=50, SVG_
 
         {/* Population size bubble legend — bottom right */}
         {(() => {
-          const sizeLevels = [
-            { pop: 1_000_000,     label: '1M'   },
-            { pop: 10_000_000,     label: '10M'  },
-            { pop: 100_000_000,    label: '100M' },
-            { pop: 1_000_000_000,  label: '1B'   },
-          ];
           const legendX   = innerWidth - 145;
-          const legendY   = innerHeight - 5;  // baseline (bottom of largest circle)
-          const gap       = 10;               // horizontal gap between circles
+          const legendY   = innerHeight - 5;
           const BUBBLE_FILL   = "#c9d8e3";
           const BUBBLE_STROKE = "#7a9cad";
-
-          // compute x centres: pack left-to-right with gaps
-          let curX = 0;
-          const positions = sizeLevels.map(({ pop, label }) => {
-            const r = rScale(pop);
-            const cx = curX + r;
-            curX = cx + r + gap;
-            return { r, cx, label };
-          });
+          const curX = bubbleLegendPositions[bubbleLegendPositions.length - 1].cx + bubbleLegendPositions[bubbleLegendPositions.length - 1].r + 10;
 
           return (
             <g transform={`translate(${legendX}, ${legendY})`}>
               {/* Title */}
               <text
-                x={curX/6 - gap / 2}
+                x={curX/6 - 5}
                 y={-rScale(1_000_000_000) - 30}
                 textAnchor="middle"
                 fontSize={10}
@@ -142,7 +148,7 @@ export const P3_Bubbleplot = ({ data, pixelsPerTickX=80, pixelsPerTickY=50, SVG_
                 SIZE BY POPULATION
               </text>
 
-              {positions.map(({ r, cx, label }) => (
+              {bubbleLegendPositions.map(({ r, cx, label }) => (
                 <g key={label}>
                   <circle
                     cx={cx}

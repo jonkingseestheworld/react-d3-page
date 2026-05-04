@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import './App.css';
-import { plotLabels } from './Plots/plots.config';
+import { plotLabels, plotConfig } from './Plots/plots.config';
 
 // Auto-discover all Plot*.jsx files in ./Plots — no manual imports needed
 const plotModules = import.meta.glob('./Plots/Plot*.jsx', { eager: true });
@@ -13,6 +13,7 @@ const plots = Object.entries(plotModules)
     return {
       name,
       label: plotLabels[name] ?? `P${number}`,
+      config: plotConfig[name] ?? null,
       path: `/plot${number}`,
       Component: mod.default,
     };
@@ -102,11 +103,30 @@ function App() {
                   <hr style={{border: 'none', borderTop: '1px solid #333', margin: '23px 0', width: '100%'}} />
                 </div>
 
-                <ul className="home-nav-list">
-                  {plots.map(p => (
-                    <li key={p.path}><Link to={p.path}>{p.label}</Link></li>
-                  ))}
-                </ul>
+                <div className="project-grid">
+                  {plots.map(p => {
+                    const cfg = p.config;
+                    return (
+                      <div key={p.path} className="project-card">
+                        <Link to={p.path} className="project-image-wrapper">
+                          {cfg?.thumbnail
+                            ? <img src={cfg.thumbnail} alt={p.label} className="project-image" />
+                            : <div className="project-image-placeholder" />}
+                        </Link>
+                        <div className="project-content">
+                          <h3 className="project-name">{p.label}</h3>
+                          {cfg?.description && <p className="project-description">{cfg.description}</p>}
+                          {cfg?.tags?.length > 0 && (
+                            <div className="project-tags">
+                              {cfg.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
+                            </div>
+                          )}
+                          <Link to={p.path} className="project-link">View Project →</Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             } />
             {plots.map(({ path, Component }) => (

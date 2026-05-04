@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
 :root {
   /* === Layout === */
   --page-gutter: 20px 30px;
@@ -30,7 +32,7 @@
   --plot-tick-color:       var(--color-text-muted);
 
   /* === Fonts === */
-  --font-family-base:  'Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-base:  'Ubuntu', system-ui, Avenir, Helvetica, Arial, sans-serif;
 
   /* === Font Sizes === */
   --font-size-xs:      11px;
