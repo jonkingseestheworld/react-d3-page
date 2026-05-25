@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react';
 import { scaleLinear, scaleBand, max } from 'd3';
+import * as Flags from 'country-flag-icons/react/3x2';
 import { AxisBottom } from './AxisBottom';
 import { useDimensions } from './use-dimensions';
+import { COUNTRY_CODES } from '../data/data_country_mapping';
 
 const MARGIN = { top: 10, right: 50, bottom: 50, left: 90 };
 const BAR_COLOR = '#591c00';
@@ -170,7 +172,14 @@ export const P4_CountryBarChart = ({ data, SVG_WIDTH, SVG_HEIGHT, pixelsPerTickX
         {/* HTML Tooltip */}
         {tooltipData && (
           <div className="country-bar-tooltip" style={{ left: `${tooltipData.xPos}px`, top: `${tooltipData.yPos}px` }}>
-            <div className="country-bar-tooltip-row">{tooltipData.country}, {tooltipData.year}</div>
+            <div className="country-bar-tooltip-row" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              {(() => {
+                const code = COUNTRY_CODES[tooltipData.country];
+                const FlagComponent = code ? Flags[code] : null;
+                return FlagComponent ? <FlagComponent style={{ width: '24px', height: 'auto' }} /> : null;
+              })()}
+              {tooltipData.year}
+            </div>
             <div className="country-bar-tooltip-row">Total: {tooltipData.total.toFixed(0)} TWh</div>
             <div className="country-bar-tooltip-row">{tooltipData.fossilPct}% Fossil</div>
             <div className="country-bar-tooltip-row">{tooltipData.renewablePct}% Renewables</div>
