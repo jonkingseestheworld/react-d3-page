@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nivo/bar": "^0.99.0",
+    "country-flag-icons": "^1.6.17",
     "d3": "^7.9.0",
     "d3-voronoi-map": "^2.1.1",
     "react": "^19.2.0",
