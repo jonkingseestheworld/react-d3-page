@@ -4,7 +4,7 @@ import { data } from './data/data_energy';
 import { P4_ResponsiveStackedAreaChart } from './functions/P4_StackedAreaChart';
 import { P4_ResponsiveRenewablesLineChart } from './functions/P4_RenewablesLineChart';
 import { P4_ResponsiveCountryBarChart } from './functions/P4_CountryBarChart';
-import { P4_ResponsiveDonutChart } from './functions/P4_DonutChart';
+import { P4_ResponsiveCircularTreemap } from './functions/P4_CircularTreemap';
 
 // Plot4 Color Palette
 const ROOT_BG_COLOR = "#F2DDCC";      // Root/page background (warm beige)
@@ -29,6 +29,8 @@ function Plot4() {
     if (!data || data.length === 0) return 2024;
     return Math.max(...data.filter(d => d.country !== 'World').map(d => d.year));
   });
+
+  const [hoveredYear, setHoveredYear] = useState(null);
 
   // Top 10 countries by energy use in the selected year
   const countryData = useMemo(() => {
@@ -162,19 +164,19 @@ function Plot4() {
           </div>
 
           <div className="plot4-subtitle" style={{ paddingBottom: '10px', fontSize: '16px', color: SUBTITLE_COLOR, textAlign: 'left' }}>
-          Explore global data on where our energy comes from, and how it is changing.
+          Explore global data on where our energy comes from, and how it is changing in the past 60 years.
           </div>
 
           <div className="plot4-charts">
             <div className="plot4-chart-wrapper">
               <div className="plot4-chart-title">Global Energy Consumption by Source Over Time</div>
               <div className="plot4-chart-subtitle">Measured in terawatt-hours (TWh), using the substitution method</div>
-              <P4_ResponsiveStackedAreaChart data={yearlyData} height={CHART_HEIGHT} />
+              <P4_ResponsiveStackedAreaChart data={yearlyData} height={CHART_HEIGHT} hoveredYear={hoveredYear} onHover={setHoveredYear} />
             </div>
             <div className="plot4-chart-wrapper">
               <div className="plot4-chart-title">Renewable Energy Growth</div>
               <div className="plot4-chart-subtitle">The share of energy from renewable sources has increased massively over the past few decades, specifically with wind and solar powers.</div>
-              <P4_ResponsiveRenewablesLineChart data={yearlyData} height={CHART_HEIGHT} />
+              <P4_ResponsiveRenewablesLineChart data={yearlyData} height={CHART_HEIGHT} hoveredYear={hoveredYear} onHover={setHoveredYear} />
             </div>
           </div>
 
@@ -204,12 +206,12 @@ function Plot4() {
               <div style={{ display: 'flex', gap: 30 }}>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="plot4-chart-title">Global Energy Mix Breakdown</div>
-                  <div className="plot4-chart-subtitle">Check the share of energy from each source in the year</div>
-                  <P4_ResponsiveDonutChart data={yearlyData} height={CHART_HEIGHT} selectedYear={selectedYear} />
+                  <div className="plot4-chart-subtitle">Check the share of energy from each source in each year using the year slider above</div>
+                  <P4_ResponsiveCircularTreemap data={yearlyData} height={CHART_HEIGHT} selectedYear={selectedYear} />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="plot4-chart-title">Top 10 Countries with the Most Energy Use</div>
-                  <div className="plot4-chart-subtitle">Total energy consumption in the year by country</div>
+                  <div className="plot4-chart-subtitle">In most countries, energy share is still mainly dominated by fossil fuels.</div>
                   <P4_ResponsiveCountryBarChart data={countryData} height={CHART_HEIGHT} />
                 </div>
               </div>

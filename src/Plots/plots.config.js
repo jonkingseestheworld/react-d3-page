@@ -28,9 +28,9 @@ export const plotConfig = {
     thumbnail: '/thumbnails/Plot4_thumbnail.png',
   },
   Plot5: {
-    label: '[Placeholder!]',
-    description: 'Coming soon.',
-    tags: [],
+    label: '[Placeholder]',
+    description: 'Experimenting circular voronoi treemap viz',
+    tags: ['React', 'D3.js', 'Experiment'],
     thumbnail: null,
   },
 };
