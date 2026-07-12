@@ -1,7 +1,9 @@
 // Static (non-interactive) infographic images, sourced from the wp repo:
 // https://github.com/jonkingseestheworld/wp/tree/master/assets/img/gallery
 // Each entry: label, description, tags, thumbnail (small preview for the card grid),
-// and full (full-resolution image shown in the lightbox on click).
+// full (full-resolution image shown in the lightbox on click), and bgColor (the
+// poster's dominant background colour, used as the letterbox colour in the card
+// so portrait/landscape posters aren't cropped — sampled from each image's corner).
 // Labels/descriptions below are best-guess titles derived from filenames — edit freely.
 
 export const staticGalleryConfig = [
@@ -12,6 +14,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'Map'],
     thumbnail: '/gallery/thumbnails/1_Point_uk_pubs_starbucks_thumb.jpg',
     full: '/gallery/1_Point_uk_pubs_starbucks.png',
+    bgColor: '#011936',
   },
   {
     id: 'tech-energy-weur',
@@ -20,6 +23,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'Finance'],
     thumbnail: '/gallery/thumbnails/20220719_tech_energy_WEUR_thumb.jpg',
     full: '/gallery/20220719_tech_energy_WEUR.png',
+    bgColor: '#C0C0C0',
   },
   {
     id: 'usa-artists',
@@ -28,6 +32,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic'],
     thumbnail: '/gallery/thumbnails/20220927_USA_artists_thumb.jpg',
     full: '/gallery/20220927_USA_artists.png',
+    bgColor: '#EEEEEE',
   },
   {
     id: 'jpn-airports',
@@ -36,6 +41,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'Map'],
     thumbnail: '/gallery/thumbnails/2_Line_jpn_airports_thumb.jpg',
     full: '/gallery/2_Line_jpn_airports.png',
+    bgColor: '#C3DBD4',
   },
   {
     id: 'hp-trait-similarity-network',
@@ -44,6 +50,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'Network'],
     thumbnail: '/gallery/thumbnails/HP_trait_similarity_network_thumb.jpg',
     full: '/gallery/HP_trait_similarity_network.png',
+    bgColor: '#000035',
   },
   {
     id: 'passport-access-rank-2023',
@@ -52,6 +59,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic'],
     thumbnail: '/gallery/thumbnails/PassportAccessRank2023_plot_thumb.jpg',
     full: '/gallery/PassportAccessRank2023_plot.png',
+    bgColor: '#FFFFFF',
   },
   {
     id: 'osm-birmingham',
@@ -60,6 +68,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'Map'],
     thumbnail: '/gallery/thumbnails/day8_OSM_Bham_thumb.jpg',
     full: '/gallery/day8_OSM_Bham.png',
+    bgColor: '#232526',
   },
   {
     id: 'tt-2023-wk6-techstockprice',
@@ -68,6 +77,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday'],
     thumbnail: '/gallery/thumbnails/tt20230207wk6_techstockprice_thumb.jpg',
     full: '/gallery/tt20230207wk6_techstockprice.png',
+    bgColor: '#E5FBE5',
   },
   {
     id: 'tt-2023-wk7-hollywood-age',
@@ -76,6 +86,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday'],
     thumbnail: '/gallery/thumbnails/tt20230214wk7_HollywoodAge_thumb.jpg',
     full: '/gallery/tt20230214wk7_HollywoodAge.png',
+    bgColor: '#FFFFFF',
   },
   {
     id: 'tt-2023-wk8-br-color-uniq',
@@ -84,6 +95,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday'],
     thumbnail: '/gallery/thumbnails/tt20230221wk8_BRcolor_uniq_thumb.jpg',
     full: '/gallery/tt20230221wk8_BRcolor_uniq.png',
+    bgColor: '#EFEFED',
   },
   {
     id: 'tt-2023-wk10-numbats',
@@ -92,6 +104,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday'],
     thumbnail: '/gallery/thumbnails/tt20230307wk10_numbats_thumb.jpg',
     full: '/gallery/tt20230307wk10_numbats.png',
+    bgColor: '#1C1C1C',
   },
   {
     id: 'tt-2023-wk13-timezones',
@@ -100,6 +113,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday'],
     thumbnail: '/gallery/thumbnails/tt20230329wk13_timezones_thumb.jpg',
     full: '/gallery/tt20230329wk13_timezones.png',
+    bgColor: '#171C19',
   },
   {
     id: 'tt-2023-wk17-marathon',
@@ -108,6 +122,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday'],
     thumbnail: '/gallery/thumbnails/tt20230425wk17_marathon_thumb.jpg',
     full: '/gallery/tt20230425wk17_marathon.png',
+    bgColor: '#13293D',
   },
   {
     id: 'tt-2023-wk27-hist-markers',
@@ -116,6 +131,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday'],
     thumbnail: '/gallery/thumbnails/tt20230704wk27_hist_markers_thumb.jpg',
     full: '/gallery/tt20230704wk27_hist_markers.png',
+    bgColor: '#133133',
   },
   {
     id: 'tt-2023-wk28-northern-hemi-temp',
@@ -124,6 +140,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday', 'Animated'],
     thumbnail: '/gallery/thumbnails/tt20230711wk28_NorthernHemi_temp_thumb.jpg',
     full: '/gallery/tt20230711wk28_NorthernHemi_temp.gif',
+    bgColor: '#000000',
   },
   {
     id: 'tt-2023-wk28-southern-hemi-temp',
@@ -132,6 +149,7 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday', 'Animated'],
     thumbnail: '/gallery/thumbnails/tt20230711wk28_SouthernHemi_temp_thumb.jpg',
     full: '/gallery/tt20230711wk28_SouthernHemi_temp.gif',
+    bgColor: '#000000',
   },
   {
     id: 'tt-2023-wk28-global-temp',
@@ -140,5 +158,6 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday', 'Animated'],
     thumbnail: '/gallery/thumbnails/tt20230711wk28_global_temp_thumb.jpg',
     full: '/gallery/tt20230711wk28_global_temp.gif',
+    bgColor: '#000000',
   },
 ];

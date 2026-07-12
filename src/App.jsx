@@ -146,7 +146,12 @@ function App() {
                         onClick={() => setLightboxItem(item)}
                         aria-label={`View larger image: ${item.label}`}
                       >
-                        <img src={item.thumbnail} alt={item.label} className="project-image" />
+                        <img
+                          src={item.thumbnail}
+                          alt={item.label}
+                          className="project-image project-image--contain"
+                          style={{ backgroundColor: item.bgColor }}
+                        />
                       </button>
                       <div className="project-content">
                         <h3 className="project-name">{item.label}</h3>
