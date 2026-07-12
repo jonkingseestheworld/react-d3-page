@@ -27,12 +27,6 @@ export const plotConfig = {
     tags: ['React', 'D3.js', 'Dashboard'],
     thumbnail: '/thumbnails/Plot4_thumbnail.png',
   },
-  Plot5: {
-    label: '[Placeholder]',
-    description: 'Experimenting circular voronoi treemap viz',
-    tags: ['React', 'D3.js', 'Experiment'],
-    thumbnail: null,
-  },
 };
 
 // Derived — keeps the hamburger nav working without changes
