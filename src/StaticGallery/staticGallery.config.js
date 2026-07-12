@@ -86,14 +86,6 @@ export const staticGalleryConfig = [
     full: '/gallery/tt20230221wk8_BRcolor_uniq.png',
   },
   {
-    id: 'tt-2023-wk10-numbats',
-    label: 'Numbats (TidyTuesday Wk10 2023)',
-    description: 'A TidyTuesday visualisation of numbat sighting data.',
-    tags: ['Infographic', 'TidyTuesday'],
-    thumbnail: '/gallery/thumbnails/tt20230307wk10_numbats_thumb.jpg',
-    full: '/gallery/tt20230307wk10_numbats.png',
-  },
-  {
     id: 'tt-2023-wk13-timezones',
     label: 'Timezones (TidyTuesday Wk13 2023)',
     description: 'A TidyTuesday visualisation of global timezones.',
@@ -124,14 +116,6 @@ export const staticGalleryConfig = [
     tags: ['Infographic', 'TidyTuesday', 'Animated'],
     thumbnail: '/gallery/thumbnails/tt20230711wk28_NorthernHemi_temp_thumb.jpg',
     full: '/gallery/tt20230711wk28_NorthernHemi_temp.gif',
-  },
-  {
-    id: 'tt-2023-wk28-southern-hemi-temp',
-    label: 'Southern Hemisphere Temperature (TidyTuesday Wk28 2023)',
-    description: 'An animated TidyTuesday visualisation of Southern Hemisphere temperature trends.',
-    tags: ['Infographic', 'TidyTuesday', 'Animated'],
-    thumbnail: '/gallery/thumbnails/tt20230711wk28_SouthernHemi_temp_thumb.jpg',
-    full: '/gallery/tt20230711wk28_SouthernHemi_temp.gif',
   },
   {
     id: 'tt-2023-wk28-global-temp',
