@@ -48,7 +48,7 @@
 .project-image-wrapper {
   display: block;
   width: 100%;
-  aspect-ratio: 16/9;
+  aspect-ratio: 10/9;
   overflow: hidden;
 }
 .project-image {
@@ -68,10 +68,10 @@
 }
 
 .project-content {
-  padding: 16px 20px 20px;
+  padding: 12px 20px 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
 }
 
