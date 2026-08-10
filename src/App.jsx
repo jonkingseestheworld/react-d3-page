@@ -102,8 +102,8 @@ function App() {
                 {/* <img src="/D3.svg" alt="D3.js Logo" style={{ width: '100px', height: '100px' }} />. */}
                 <div style={{ textAlign: 'center', marginBottom: '20px' }}>
                   {/* Replace D3 text below with the D3.js Logo image */}
-                  <h1 style={{fontSize: "35px", marginTop: "5px", marginBottom: "5px"}}>Working With <img src="/D3.svg" alt="D3" style={{height: "35px", width: "35px", verticalAlign: "middle", marginLeft: "8px"}} /></h1>
-                  <h2 style={{fontSize: "25px", marginTop: "5px", marginBottom: "5px"}}>Data Viz Gallery</h2>
+                  <h1 style={{fontSize: "35px", marginTop: "5px", marginBottom: "5px"}}>Gallery</h1>
+                  <h2 style={{fontSize: "25px", marginTop: "5px", marginBottom: "5px"}}><img src="/D3.svg" alt="D3" style={{height: "35px", width: "35px", verticalAlign: "middle", marginLeft: "8px"}} /> web charts</h2>
                   <hr style={{border: 'none', borderTop: '1px solid #333', margin: '23px 0', width: '100%'}} />
                 </div>
 
