@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react
 import { useState, useRef, useEffect } from 'react';
 import './App.css';
 import { plotLabels, plotConfig } from './Plots/plots.config';
+import { staticGalleryConfig } from './StaticGallery/staticGallery.config';
+import Lightbox from './StaticGallery/Lightbox';
 
 // Auto-discover all Plot*.jsx files in ./Plots — no manual imports needed
 const plotModules = import.meta.glob('./Plots/Plot*.jsx', { eager: true });
@@ -83,6 +85,8 @@ function Header() {
 }
 
 function App() {
+  const [lightboxItem, setLightboxItem] = useState(null);
+
   return (
     <Router>
       <RedirectHandler />
@@ -98,8 +102,8 @@ function App() {
                 {/* <img src="/D3.svg" alt="D3.js Logo" style={{ width: '100px', height: '100px' }} />. */}
                 <div style={{ textAlign: 'center', marginBottom: '20px' }}>
                   {/* Replace D3 text below with the D3.js Logo image */}
-                  <h1 style={{fontSize: "35px", marginTop: "5px", marginBottom: "5px"}}>Working With <img src="/D3.svg" alt="D3" style={{height: "35px", width: "35px", verticalAlign: "middle", marginLeft: "8px"}} /></h1>
-                  <h2 style={{fontSize: "25px", marginTop: "5px", marginBottom: "5px"}}>Data Viz Gallery</h2>
+                  <h1 style={{fontSize: "35px", marginTop: "5px", marginBottom: "5px"}}>Gallery</h1>
+                  <h2 style={{fontSize: "25px", marginTop: "5px", marginBottom: "5px"}}><img src="/D3.svg" alt="D3" style={{height: "35px", width: "35px", verticalAlign: "middle", marginLeft: "8px"}} /> web charts</h2>
                   <hr style={{border: 'none', borderTop: '1px solid #333', margin: '23px 0', width: '100%'}} />
                 </div>
 
@@ -127,6 +131,55 @@ function App() {
                     );
                   })}
                 </div>
+
+                <div style={{ textAlign: 'center', margin: '20px 0' }}>
+                  <h2 style={{fontSize: "25px", marginTop: "5px", marginBottom: "5px"}}>Static Infographics</h2>
+                  <hr style={{border: 'none', borderTop: '1px solid #333', margin: '23px 0', width: '100%'}} />
+                </div>
+
+                <div className="project-grid">
+                  {staticGalleryConfig.map(item => (
+                    <div key={item.id} className="project-card">
+                      <button
+                        type="button"
+                        className="project-image-wrapper project-image-button"
+                        onClick={() => setLightboxItem(item)}
+                        aria-label={`View larger image: ${item.label}`}
+                      >
+                        <img
+                          src={item.thumbnail}
+                          alt={item.label}
+                          className="project-image project-image--contain"
+                          style={{ backgroundColor: item.bgColor }}
+                        />
+                      </button>
+                      <div className="project-content">
+                        <h3 className="project-name">{item.label}</h3>
+                        {item.description && <p className="project-description">{item.description}</p>}
+                        {item.tags?.length > 0 && (
+                          <div className="project-tags">
+                            {item.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
+                          </div>
+                        )}
+                        <button
+                          type="button"
+                          className="project-link project-link-button"
+                          onClick={() => setLightboxItem(item)}
+                        >
+                          View Image →
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {lightboxItem && (
+                  <Lightbox
+                    src={lightboxItem.full}
+                    alt={lightboxItem.label}
+                    onClose={() => setLightboxItem(null)}
+                  />
+                )}
               </div>
             } />
             {plots.map(({ path, Component }) => (

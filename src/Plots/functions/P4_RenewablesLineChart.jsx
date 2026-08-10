@@ -109,10 +109,9 @@ export const P4_RenewablesLineChart = ({ data, SVG_WIDTH, SVG_HEIGHT, pixelsPerT
           />
         ))}
 
-        {/* End-of-line labels */}
+        {/* End-of-line labels (static, no values) */}
         {RENEWABLE_SOURCES.map(source => {
           const lastPoint = data[data.length - 1];
-          const hoveredData = hoveredYear ? data.find(d => d.year === hoveredYear) : null;
           return (
             <text
               key={source}
@@ -124,11 +123,6 @@ export const P4_RenewablesLineChart = ({ data, SVG_WIDTH, SVG_HEIGHT, pixelsPerT
               fontWeight="600"
             >
               {SOURCE_LABELS[source]}
-              {hoveredData && (
-                <tspan x={innerWidth + 6} dy="1.3em" fontSize={10} fontWeight="400">
-                  {formatValue(hoveredData[source])}
-                </tspan>
-              )}
             </text>
           );
         })}
@@ -158,7 +152,7 @@ export const P4_RenewablesLineChart = ({ data, SVG_WIDTH, SVG_HEIGHT, pixelsPerT
   );
 };
 
-export const P4_ResponsiveRenewablesLineChart = ({ height = 400, hoveredYear, onHover, ...props }) => {
+export const P4_ResponsiveRenewablesLineChart = ({ height = 400, hoveredYear, onHover, data, ...props }) => {
   const chartRef = useRef(null);
   const chartSize = useDimensions(chartRef);
   const [tooltipPos, setTooltipPos] = useState(null);
@@ -166,6 +160,8 @@ export const P4_ResponsiveRenewablesLineChart = ({ height = 400, hoveredYear, on
   const handleHover = (year) => {
     onHover?.(year);
   };
+
+  const hoveredData = hoveredYear && data ? data.find(d => d.year === hoveredYear) : null;
 
   return (
     <div ref={chartRef} style={{ width: "100%", height, position: 'relative' }}>
@@ -175,25 +171,43 @@ export const P4_ResponsiveRenewablesLineChart = ({ height = 400, hoveredYear, on
         hoveredYear={hoveredYear}
         onHover={handleHover}
         onTooltipPos={setTooltipPos}
+        data={data}
         {...props}
       />
-      {hoveredYear && tooltipPos !== null && (
+      {hoveredYear && tooltipPos !== null && hoveredData && (
         <div style={{
           position: 'absolute',
-          top: '10px',
+          top: '5px',
           left: `${tooltipPos + MARGIN.left}px`,
           transform: 'translateX(-50%)',
-          backgroundColor: '#ccc',
+          backgroundColor: 'rgba(145, 144, 144, 0.8)',
           border: '1px solid #ccc',
-          borderRadius: '4px',
-          padding: '2px 8px',
+          borderRadius: '6px',
+          padding: '5px 8px',
           fontSize: '12px',
-          fontWeight: '500',
           pointerEvents: 'none',
           zIndex: 10,
-          whiteSpace: 'nowrap'
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
+          minWidth: '130px'
         }}>
-          {hoveredYear}
+          <div style={{ fontWeight: '700', marginBottom: '4px', color: 'var(--color-deep-teal)' }}>
+            Year: {hoveredYear}
+          </div>
+          {RENEWABLE_SOURCES.map(source => (
+            <div key={source} style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '2px',
+              color: '#333'
+            }}>
+              <span style={{ marginRight: '8px', fontWeight: '500', color: 'var(--color-deep-teal)' }}>
+                {SOURCE_LABELS[source]}:
+              </span>
+              <span style={{ fontWeight: '600', color: SOURCE_COLORS[source] }}>
+                {formatValue(hoveredData[source])} TWh
+              </span>
+            </div>
+          ))}
         </div>
       )}
     </div>

@@ -48,7 +48,7 @@
 .project-image-wrapper {
   display: block;
   width: 100%;
-  aspect-ratio: 16/9;
+  aspect-ratio: 10/9;
   overflow: hidden;
 }
 .project-image {
@@ -61,6 +61,9 @@
 .project-image-wrapper:hover .project-image {
   transform: scale(1.03);
 }
+.project-image--contain {
+  object-fit: contain;
+}
 .project-image-placeholder {
   width: 100%;
   height: 100%;
@@ -68,10 +71,10 @@
 }
 
 .project-content {
-  padding: 16px 20px 20px;
+  padding: 12px 20px 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
 }
 
@@ -113,6 +116,58 @@
 .project-link:hover {
   opacity: 0.75;
   color: var(--color-terracotta);
+}
+
+.project-image-button {
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+}
+
+.project-link-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* Lightbox */
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  cursor: zoom-out;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  cursor: default;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  font-size: 40px;
+  line-height: 1;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.lightbox-close:hover {
+  opacity: 0.75;
 }
 
 .site-header {
