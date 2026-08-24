@@ -35,10 +35,50 @@ function RedirectHandler() {
   return null;
 }
 
+function PlotNavigation({ currentPlotNumber }) {
+  const navigate = useNavigate();
+  const visiblePlots = plots.filter(p => !p.config?.hidden);
+  const currentIndex = visiblePlots.findIndex(p => p.name === `Plot${currentPlotNumber}`);
+
+  const hasPrev = currentIndex > 0;
+  const hasNext = currentIndex < visiblePlots.length - 1;
+
+  const handlePrev = () => {
+    if (hasPrev) navigate(visiblePlots[currentIndex - 1].path);
+  };
+
+  const handleNext = () => {
+    if (hasNext) navigate(visiblePlots[currentIndex + 1].path);
+  };
+
+  return (
+    <div className="plot-navigation">
+      <button
+        className="plot-nav-button plot-nav-prev"
+        onClick={handlePrev}
+        disabled={!hasPrev}
+        aria-label="Previous plot"
+      >
+        ❮
+      </button>
+      <span className="plot-nav-counter">{currentIndex + 1} / {visiblePlots.length}</span>
+      <button
+        className="plot-nav-button plot-nav-next"
+        onClick={handleNext}
+        disabled={!hasNext}
+        aria-label="Next plot"
+      >
+        ❯
+      </button>
+    </div>
+  );
+}
+
 function Header() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const visiblePlots = plots.filter(p => !p.config?.hidden);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -53,9 +93,15 @@ function Header() {
     <header className="site-header">
       <div className="wrapper">
         <nav className="site-nav">
-          <Link to="/" className="header-home">Home</Link>
+          <a href="https://johnny.kinglau.info/" className="site-title" target="_blank" rel="noopener noreferrer">
+            <span className="site-title-name">JOHNNY KING </span>LAU
+            <img className="king-character" src="/king_character.png" alt="King" />
+          </a>
 
-          <div className="hamburger-menu" ref={menuRef}>
+          <div className="nav-right">
+            <Link to="/" className="nav-gallery">Back to GALLERY</Link>
+
+            <div className="hamburger-menu" ref={menuRef}>
             <div
               className={`ham-menu${open ? ' active' : ''}`}
               onClick={() => setOpen(o => !o)}
@@ -68,7 +114,13 @@ function Header() {
 
             {open && (
               <ul className="hamburger-dropdown">
-                {plots.map(p => (
+                <li className="hamburger-gallery">
+                  <button onClick={() => { navigate('/'); setOpen(false); }}>
+                    GALLERY
+                  </button>
+                </li>
+                <li className="hamburger-divider" />
+                {visiblePlots.map(p => (
                   <li key={p.path}>
                     <button onClick={() => { navigate(p.path); setOpen(false); }}>
                       {p.label}
@@ -77,6 +129,7 @@ function Header() {
                 ))}
               </ul>
             )}
+            </div>
           </div>
         </nav>
       </div>
@@ -86,6 +139,24 @@ function Header() {
 
 function App() {
   const [lightboxItem, setLightboxItem] = useState(null);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  const handleOpenLightbox = (item) => {
+    setLightboxItem(item);
+    setLightboxIndex(staticGalleryConfig.findIndex(i => i.id === item.id));
+  };
+
+  const handleLightboxNext = () => {
+    const nextIndex = (lightboxIndex + 1) % staticGalleryConfig.length;
+    setLightboxIndex(nextIndex);
+    setLightboxItem(staticGalleryConfig[nextIndex]);
+  };
+
+  const handleLightboxPrev = () => {
+    const prevIndex = (lightboxIndex - 1 + staticGalleryConfig.length) % staticGalleryConfig.length;
+    setLightboxIndex(prevIndex);
+    setLightboxItem(staticGalleryConfig[prevIndex]);
+  };
 
   return (
     <Router>
@@ -102,13 +173,13 @@ function App() {
                 {/* <img src="/D3.svg" alt="D3.js Logo" style={{ width: '100px', height: '100px' }} />. */}
                 <div style={{ textAlign: 'center', marginBottom: '20px' }}>
                   {/* Replace D3 text below with the D3.js Logo image */}
-                  <h1 style={{fontSize: "35px", marginTop: "5px", marginBottom: "5px"}}>Gallery</h1>
-                  <h2 style={{fontSize: "25px", marginTop: "5px", marginBottom: "5px"}}><img src="/D3.svg" alt="D3" style={{height: "35px", width: "35px", verticalAlign: "middle", marginLeft: "8px"}} /> web charts</h2>
+                  <h1 style={{marginTop: "5px", marginBottom: "5px"}}>GALLERY</h1>
+                  <h2 style={{marginTop: "5px", marginBottom: "5px"}}><img src="/D3.svg" alt="D3" style={{height: "35px", width: "35px", verticalAlign: "middle", marginLeft: "8px"}} /> web charts</h2>
                   <hr style={{border: 'none', borderTop: '1px solid #333', margin: '23px 0', width: '100%'}} />
                 </div>
 
                 <div className="project-grid">
-                  {plots.map(p => {
+                  {plots.filter(p => !p.config?.hidden).map(p => {
                     const cfg = p.config;
                     return (
                       <div key={p.path} className="project-card">
@@ -133,7 +204,7 @@ function App() {
                 </div>
 
                 <div style={{ textAlign: 'center', margin: '20px 0' }}>
-                  <h2 style={{fontSize: "25px", marginTop: "5px", marginBottom: "5px"}}>Static Infographics</h2>
+                  <h2 style={{marginTop: "5px", marginBottom: "5px"}}>Static Infographics</h2>
                   <hr style={{border: 'none', borderTop: '1px solid #333', margin: '23px 0', width: '100%'}} />
                 </div>
 
@@ -143,7 +214,7 @@ function App() {
                       <button
                         type="button"
                         className="project-image-wrapper project-image-button"
-                        onClick={() => setLightboxItem(item)}
+                        onClick={() => handleOpenLightbox(item)}
                         aria-label={`View larger image: ${item.label}`}
                       >
                         <img
@@ -164,7 +235,7 @@ function App() {
                         <button
                           type="button"
                           className="project-link project-link-button"
-                          onClick={() => setLightboxItem(item)}
+                          onClick={() => handleOpenLightbox(item)}
                         >
                           View Image →
                         </button>
@@ -178,17 +249,25 @@ function App() {
                     src={lightboxItem.full}
                     alt={lightboxItem.label}
                     onClose={() => setLightboxItem(null)}
+                    onNext={handleLightboxNext}
+                    onPrev={handleLightboxPrev}
+                    currentIndex={lightboxIndex}
+                    total={staticGalleryConfig.length}
                   />
                 )}
               </div>
             } />
-            {plots.map(({ path, Component }) => (
-              <Route key={path} path={path} element={
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-                  <Component />
-                </div>
-              } />
-            ))}
+            {plots.map(({ path, name, Component }) => {
+              const plotNumber = name.replace('Plot', '');
+              return (
+                <Route key={path} path={path} element={
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh', position: 'relative' }}>
+                    <Component />
+                    <PlotNavigation currentPlotNumber={plotNumber} />
+                  </div>
+                } />
+              );
+            })}
           </Routes>
         </div>
         <footer className="site-footer">

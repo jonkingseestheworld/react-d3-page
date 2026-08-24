@@ -5,9 +5,10 @@
   --page-gutter: 20px 30px;
 
   /* === Brand Colours === */
-  --color-deep-teal:   #1f4f48;
+  --color-deep-teal:   #02786e;
   --color-sage-green:  #8EBBA7;
-  --color-mist-blue:   #B9CDCB;
+  --color-green-sheen: #549182;
+  --color-mist-blue:   #e2efef;
   --color-linen:       #F2DDCC;
   --color-peach:       #FCAC89;
   --color-terracotta:  #f4702e;
@@ -16,9 +17,9 @@
   --color-primary:     var(--color-deep-teal);
   --color-secondary:   var(--color-deep-teal);
   --color-bg:          var(--color-mist-blue);
+  --color-title-primary: #111111;
   --color-text:        var(--color-deep-teal);
   --color-text-muted:  var(--color-sage-green);
-  --color-green-sheen: #549182;
 
   /* === Plot / Chart Defaults === */
   --plot-bar-color:        var(--color-linen);
@@ -39,8 +40,8 @@
   --font-size-sm:      13px;
   --font-size-base:    16px;
   --font-size-lg:      20px;
-  --font-size-xl:      28px;
-  --font-size-h1:      2em;
+  --font-size-xl:      24px;
+  --font-size-h1:      28px;
 
   /* === Base === */
   font-family:            var(--font-family-base);
@@ -63,7 +64,7 @@ body {
   box-sizing: border-box;
 }
 
-h1 { font-size: var(--font-size-h1); color: var(--color-primary); }
+h1 { font-size: var(--font-size-h1); color: var(--color-title-primary); }
 h2 { font-size: var(--font-size-xl);  color: var(--color-primary); }
 p  { font-size: var(--font-size-base); }
 
